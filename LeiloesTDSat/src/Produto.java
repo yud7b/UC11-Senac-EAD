@@ -4,6 +4,15 @@ public class Produto {
     private double valor;
     private String status;
 
+    public Produto() {}
+
+    public Produto(int id, String nome, double valor, String status) {
+        this.id = id;
+        this.nome = nome;
+        this.valor = valor;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }

@@ -69,7 +69,8 @@ public class ProdutosDAO {
     // Método para vender produto, atualiza status para "Vendido"
 public boolean venderProduto(int idProduto) {
     String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
-    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+    try (Connection conn = connectDB();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
         ps.setInt(1, idProduto);
         int rows = ps.executeUpdate();
         return rows > 0;
@@ -79,11 +80,11 @@ public boolean venderProduto(int idProduto) {
     }
 }
 
-// Método para listar só os produtos vendidos
 public List<Produto> listarProdutosVendidos() {
     List<Produto> produtosVendidos = new ArrayList<>();
     String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
-    try (PreparedStatement ps = connection.prepareStatement(sql);
+    try (Connection conn = connectDB();
+         PreparedStatement ps = conn.prepareStatement(sql);
          ResultSet rs = ps.executeQuery()) {
         while (rs.next()) {
             Produto p = new Produto();
