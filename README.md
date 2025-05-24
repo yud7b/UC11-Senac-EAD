@@ -1,21 +1,24 @@
 # Leilões TDS
-Projeto Java Desenvolvido durante curricular de Versionamento de Software do curso Técnico em Desenvolvimento de Sistemas do Senac EAD
 
-## Objetivo de software
-Realizar o cadastro de itens de uma casa de leilões
+Sistema de gerenciamento para casa de leilões desenvolvido em Java como parte do curso Técnico em Desenvolvimento de Sistemas do Senac EAD.
 
-## Funcionalidade do sistema
-- Listage de produtos
-- Cadastro de produtos
-- Edição de produtos
-- Exclusão de produtos
+## Funcionalidades Principais
+- Cadastro, edição e exclusão de produtos
+- Controle de vendas com atualização de status
+- Relatório de produtos vendidos
 
-## Status do projeto
-Em desenvolvimento
+## Tecnologias
+- Java 11
+- MySQL 8.0
+- Java Swing (interface)
 
-## Tecnologias utilizadas
-- Java
-- MySQL
+## Como Usar
+1. Importe o projeto no NetBeans/Eclipse
+2. Execute o script SQL (`database/uc11.sql`)
+3. Configure as credenciais do banco em `conectaDAO.java`
+4. Execute a classe `cadastroVIEW`
 
-## Time de Desenvolvedores
-- Yudi
+## Desenvolvedor
+Yudi Barreto  
+[yud7b](https://github.com/yud7b)  
+yudibarret24@gmail.com
