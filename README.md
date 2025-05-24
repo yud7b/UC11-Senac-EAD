@@ -16,3 +16,6 @@ Em desenvolvimento
 ## Tecnologias utilizadas
 - Java
 - MySQL
+
+## Time de Desenvolvedores
+- Yudi
