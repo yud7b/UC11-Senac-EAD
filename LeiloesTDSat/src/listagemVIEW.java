@@ -18,21 +18,27 @@ public class listagemVIEW extends javax.swing.JFrame {
     private Connection con;
 
     public listagemVIEW() {
-        initComponents();
-        conectarBanco();
+    initComponents();
+    conectarBanco();
+    if (con != null) {
         listarProdutos();
+    } else {
+        JOptionPane.showMessageDialog(null, "Falha ao conectar ao banco. Listagem não será exibida.");
     }
+}
+
     
     private void conectarBanco() {
-        try {
-            // Ajuste a URL, usuário e senha conforme seu banco
-            String url = "jdbc:mysql://localhost:3306/seu_banco";
-            String user = "root";
-            String password = "senha";
-            con = DriverManager.getConnection(url, user, password);
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + e.getMessage());
-        }
+    try {
+        String url = "jdbc:mysql://localhost:3306/uc11";
+        String user = "root";
+        String password = "Yudi02br@";
+        con = DriverManager.getConnection(url, user, password);
+        JOptionPane.showMessageDialog(null, "Conexão com o banco realizada com sucesso!");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco: " + e.getMessage());
+        e.printStackTrace();  // mostra o erro detalhado no console
+    }
     }
 
     

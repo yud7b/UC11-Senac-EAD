@@ -13,7 +13,7 @@ public class ProdutosDAO {
 
     public List<String> listarProdutos() throws SQLException {
         List<String> produtos = new ArrayList<>();
-        String sql = "SELECT id, nome, preco, status FROM produtos";
+        String sql = "SELECT id, nome, valor, status FROM produtos";
 
         Connection conn = connectDB();
         PreparedStatement pstm = conn.prepareStatement(sql);
@@ -22,7 +22,7 @@ public class ProdutosDAO {
         while (rs.next()) {
             String produto = "ID: " + rs.getInt("id") +
                              ", Nome: " + rs.getString("nome") +
-                             ", Preço: " + rs.getDouble("preco") +
+                             ", Valor: " + rs.getDouble("valor") +
                              ", Status: " + rs.getString("status");
             produtos.add(produto);
         }
@@ -34,13 +34,13 @@ public class ProdutosDAO {
         return produtos;
     }
 
-    public boolean inserirProduto(String nome, double preco, String status) throws SQLException {
-        String sql = "INSERT INTO produtos (nome, preco, status) VALUES (?, ?, ?)";
+    public boolean inserirProduto(String nome, double valor, String status) throws SQLException {
+        String sql = "INSERT INTO produtos (nome, valor, status) VALUES (?, ?, ?)";
 
         Connection conn = connectDB();
         PreparedStatement pstm = conn.prepareStatement(sql);
         pstm.setString(1, nome);
-        pstm.setDouble(2, preco);
+        pstm.setDouble(2, valor);
         pstm.setString(3, status);
 
         int rowsAffected = pstm.executeUpdate();
