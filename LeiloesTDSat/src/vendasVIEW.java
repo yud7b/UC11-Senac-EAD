@@ -1,10 +1,10 @@
-import java.sql.SQLException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 public class vendasVIEW extends javax.swing.JFrame {
 
@@ -14,10 +14,12 @@ public class vendasVIEW extends javax.swing.JFrame {
         initComponents();
         conectarBanco();
         if (con != null) {
-            listarProdutosVendidos();
+            listarProdutosVendidos(); 
         } else {
             JOptionPane.showMessageDialog(null, "Falha ao conectar ao banco. Listagem não será exibida.");
         }
+        setTitle("Consulta de Produtos Vendidos");
+        setLocationRelativeTo(null);
     }
 
     private void conectarBanco() {
@@ -33,23 +35,29 @@ public class vendasVIEW extends javax.swing.JFrame {
     }
 
     private void listarProdutosVendidos() {
-        DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
+        DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel(); 
         model.setRowCount(0);
 
         try {
-            String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+            String sql = "SELECT id, nome, valor, status FROM produtos WHERE status = 'Vendido'";
             PreparedStatement pst = con.prepareStatement(sql);
             ResultSet rs = pst.executeQuery();
 
             while (rs.next()) {
-                Object[] row = {
+                model.addRow(new Object[]{
                     rs.getInt("id"),
                     rs.getString("nome"),
                     rs.getDouble("valor"),
                     rs.getString("status")
-                };
-                model.addRow(row);
+                });
             }
+
+            if (model.getRowCount() == 0) {
+                JOptionPane.showMessageDialog(this, "Nenhum produto vendido encontrado.");
+            }
+
+            rs.close();
+            pst.close();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Erro ao listar produtos vendidos: " + e.getMessage());
         }
@@ -178,7 +186,7 @@ public class vendasVIEW extends javax.swing.JFrame {
             } else {
                 JOptionPane.showMessageDialog(null, "Produto não encontrado ou já vendido.");
             }
-            listarProdutosVendidos();
+          listarProdutosVendidos();
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "ID inválido.");
         } catch (Exception e) {
@@ -187,37 +195,13 @@ public class vendasVIEW extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
-        // Implementar a lógica para consultar vendas
+         listarProdutosVendidos();
     }//GEN-LAST:event_btnVendasActionPerformed
 
     private void btnVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVoltarActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnVoltarActionPerformed
-
-    public void listarProdutos() {
-    DefaultTableModel model = (DefaultTableModel) listaProdutos.getModel();
-        model.setRowCount(0);
-
-        try {
-            String sql = "SELECT * FROM produtos";
-            PreparedStatement pst = con.prepareStatement(sql);
-            ResultSet rs = pst.executeQuery();
-
-            while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getDouble("valor"),
-                    rs.getString("status")
-                };
-                model.addRow(row);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Erro ao listar produtos: " + e.getMessage());
-        }
-    }
-
-    /**
+   /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
