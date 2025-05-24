@@ -66,18 +66,36 @@ public class ProdutosDAO {
         return rowsAffected > 0;
     }
 
-    public boolean venderProduto(int id) throws SQLException {
-        String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ? AND status != 'Vendido'";
-
-        Connection conn = connectDB();
-        PreparedStatement pstm = conn.prepareStatement(sql);
-        pstm.setInt(1, id);
-
-        int rowsAffected = pstm.executeUpdate();
-
-        pstm.close();
-        conn.close();
-
-        return rowsAffected > 0;
+    // Método para vender produto, atualiza status para "Vendido"
+public boolean venderProduto(int idProduto) {
+    String sql = "UPDATE produtos SET status = 'Vendido' WHERE id = ?";
+    try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setInt(1, idProduto);
+        int rows = ps.executeUpdate();
+        return rows > 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
     }
+}
+
+// Método para listar só os produtos vendidos
+public List<Produto> listarProdutosVendidos() {
+    List<Produto> produtosVendidos = new ArrayList<>();
+    String sql = "SELECT * FROM produtos WHERE status = 'Vendido'";
+    try (PreparedStatement ps = connection.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+        while (rs.next()) {
+            Produto p = new Produto();
+            p.setId(rs.getInt("id"));
+            p.setNome(rs.getString("nome"));
+            p.setValor(rs.getDouble("valor"));
+            p.setStatus(rs.getString("status"));
+            produtosVendidos.add(p);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return produtosVendidos;
+}
 }

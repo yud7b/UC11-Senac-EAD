@@ -1,5 +1,4 @@
-DROP  DATABASE IF EXISTS uc11;
-CREATE DATABASE uc11;
+
 use uc11;
 	
 -- phpMyAdmin SQL Dump
